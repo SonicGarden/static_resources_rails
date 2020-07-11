@@ -4,8 +4,8 @@ namespace :static_resources do
     require 'open3'
 
     env = {
-      'AWS_ACCESS_KEY_ID' => ENV['STATIC_RESOURCES_AWS_ACCESS_KEY_ID'],
-      'AWS_SECRET_ACCESS_KEY' => ENV['STATIC_RESOURCES_AWS_SECRET_KEY_ID'],
+      'AWS_ACCESS_KEY_ID' => ENV.fetch('STATIC_RESOURCES_AWS_ACCESS_KEY_ID'),
+      'AWS_SECRET_ACCESS_KEY' => ENV.fetch('STATIC_RESOURCES_AWS_SECRET_KEY_ID'),
     }
     max_age = 86400 * 365
 
