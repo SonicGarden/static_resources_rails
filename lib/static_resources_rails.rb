@@ -5,9 +5,15 @@ module StaticResourcesRails
   class Error < StandardError; end
 
   class << self
+    attr_accessor :region
+
+    def initialize
+      @region = 'ap-northeast-1'
+    end
+
     def bucket=(value)
       @bucket = value
-      Rails.application.config.action_controller.asset_host = "#{@bucket}.s3.ap-northeast-1.amazonaws.com"
+      Rails.application.config.action_controller.asset_host = "#{@bucket}.s3.#{region}.amazonaws.com"
     end
 
     def bucket
