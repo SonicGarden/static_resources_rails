@@ -25,7 +25,8 @@ namespace :static_resources do
       raise StaticResourcesRails::ManifestError, 'config.assets.manifest is blank!'
     end
 
-    manifest_files = [Rails.application.config.assets.manifest, 'public/packs/manifest.json']
+    manifest_files = ["assets/#{StaticResourcesRails.sprockets_manifest_filename}", 'public/packs/manifest.json']
+
     manifest_files.each do |manifest_file|
       download_url = "https://#{Rails.application.config.action_controller.asset_host}/#{manifest_file}"
       file_path = Rails.root.join(manifest_file)
