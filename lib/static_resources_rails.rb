@@ -3,6 +3,8 @@ require 'static_resources_rails/railtie'
 
 module StaticResourcesRails
   class Error < StandardError; end
+  class ManifestError < Error; end
+  class SyncError < Error; end
 
   class << self
     attr_accessor :region

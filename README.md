@@ -29,6 +29,7 @@ buckets = {
 
 if buckets.key?(Rails.env.to_sym)
   StaticResourcesRails.bucket = buckets[Rails.env.to_sym]
+  Rails.application.config.assets.manifest = 'public/assets/.sprockets-manifest.json'
 end
 ```
 
