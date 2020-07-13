@@ -21,6 +21,7 @@ And then execute:
 ## Usage
 
 In `config/initializers/static_resources_rails.rb`
+
 ```ruby
 buckets = {
   staging: 'static-resources-staging',
@@ -32,20 +33,27 @@ if buckets.key?(Rails.env.to_sym)
 end
 ```
 
-Set the following environment variables.
+### Before deploying
+
 ```
-WEBPACKER_PRECOMPILE=false
+bin/rake assets:precompile
+bin/rake static_resources:sync_s3
+```
+
+### After deployment
+
+```
+bin/rake static_resources:download_manifest
 ```
 
 ## Tasks
 
 ### `static_resources:sync_s3`
 
-*Required Env*
+_Required Env_
 
 - STATIC_RESOURCES_AWS_ACCESS_KEY_ID
 - STATIC_RESOURCES_AWS_SECRET_KEY_ID
-
 
 ### `static_resources:download_manifest`
 
