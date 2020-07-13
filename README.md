@@ -47,7 +47,7 @@ WEBPACKER_PRECOMPILE=false
 - STATIC_RESOURCES_AWS_SECRET_KEY_ID
 
 
-### `static_resources:download_webpacker_manifest`
+### `static_resources:download_manifest`
 
 ## GitHub Actions
 

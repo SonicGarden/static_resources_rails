@@ -14,22 +14,24 @@ namespace :static_resources do
       stdout, stderror, status = Open3.capture3(env, command)
 
       unless status.exitstatus.zero?
-        raise "#{dir} の aws s3 syncが正常に終了しませんでした。標準出力:#{stdout} 標準エラー：#{stderror} ステータス：#{status}"
+        raise StaticResourcesRails::SyncError, stderror
       end
     end
   end
 
-  desc 'Download webpacker manifest.json'
-  task download_webpacker_manifest: :environment do
-    manifest_path = 'packs/manifest.json'
-    download_url = "https://#{Rails.application.config.action_controller.asset_host}/#{manifest_path}"
-    public_file_path = Rails.public_path.join(manifest_path)
-    public_file_path.parent.mkdir unless public_file_path.parent.exist?
+  desc 'Download manifest.json'
+  task download_manifest: :environment do
+    unless Rails.application.config.assets.manifest
+      raise StaticResourcesRails::ManifestError, 'config.assets.manifest is blank!'
+    end
 
-    IO.write(public_file_path, URI.open(download_url).read)
+    manifest_files = ["assets/#{StaticResourcesRails.sprockets_manifest_filename}", 'packs/manifest.json']
+
+    manifest_files.each do |manifest_file|
+      download_url = "https://#{Rails.application.config.action_controller.asset_host}/#{manifest_file}"
+      file_path = Rails.public_path.join(manifest_file)
+      file_path.parent.mkdir unless file_path.parent.exist?
+      IO.write(file_path, URI.open(download_url).read)
+    end
   end
-end
-
-if %w[no false n f].include?(ENV['WEBPACKER_PRECOMPILE'])
-  Rake::Task['assets:precompile'].enhance(['static_resources:download_webpacker_manifest'])
 end
