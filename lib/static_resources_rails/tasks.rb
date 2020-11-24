@@ -1,21 +1,10 @@
 namespace :static_resources do
   desc 'Sync public/{packs,assets} to s3'
   task sync_s3: :environment do
-    require 'open3'
-
-    env = {
-      'AWS_ACCESS_KEY_ID' => ENV.fetch('STATIC_RESOURCES_AWS_ACCESS_KEY_ID'),
-      'AWS_SECRET_ACCESS_KEY' => ENV.fetch('STATIC_RESOURCES_AWS_SECRET_KEY_ID'),
-    }
-    max_age = 86400 * 365
+    require 'static_resources_rails/storage'
 
     %w[packs assets].each do |dir|
-      command = "aws s3 sync public/#{dir} s3://#{StaticResourcesRails.bucket}/#{dir} --cache-control 'max-age=#{max_age}'"
-      stdout, stderror, status = Open3.capture3(env, command)
-
-      unless status.exitstatus.zero?
-        raise StaticResourcesRails::SyncError, stderror
-      end
+      StaticResourcesRails::Storage.sync(dir)
     end
   end
 
