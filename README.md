@@ -16,17 +16,10 @@ And then execute:
 
 ## Usage
 
-In `config/initializers/static_resources_rails.rb`
+In `config/environments/production.rb`
 
 ```ruby
-buckets = {
-  staging: 'static-resources-staging',
-  production: 'static-resources-production',
-}
-
-if buckets.key?(Rails.env.to_sym)
-  StaticResourcesRails.bucket = buckets[Rails.env.to_sym]
-end
+StaticResourcesRails.bucket = 'static-resources-production'
 ```
 
 ### Before deploying
