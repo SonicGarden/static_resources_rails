@@ -14,23 +14,12 @@ And then execute:
 
     $ bundle install
 
-## Required
-
-- [aws/aws\-cli: Universal Command Line Interface for Amazon Web Services](https://github.com/aws/aws-cli)
-
 ## Usage
 
-In `config/initializers/static_resources_rails.rb`
+In `config/environments/production.rb`
 
 ```ruby
-buckets = {
-  staging: 'static-resources-staging',
-  production: 'static-resources-production',
-}
-
-if buckets.key?(Rails.env.to_sym)
-  StaticResourcesRails.bucket = buckets[Rails.env.to_sym]
-end
+StaticResourcesRails.bucket = 'static-resources-production'
 ```
 
 ### Before deploying
@@ -52,8 +41,8 @@ bin/rake static_resources:download_manifest
 
 _Required Env_
 
-- STATIC_RESOURCES_AWS_ACCESS_KEY_ID
-- STATIC_RESOURCES_AWS_SECRET_KEY_ID
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
 
 ### `static_resources:download_manifest`
 
@@ -101,7 +90,7 @@ jobs:
 
       - name: sync s3
         env:
-          STATIC_RESOURCES_AWS_ACCESS_KEY_ID: ${{ secrets.STATIC_RESOURCES_AWS_ACCESS_KEY_ID }}
-          STATIC_RESOURCES_AWS_SECRET_KEY_ID: ${{ secrets.STATIC_RESOURCES_AWS_SECRET_KEY_ID }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.STATIC_RESOURCES_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.STATIC_RESOURCES_AWS_SECRET_KEY_ID }}
         run: bundle exec rake static_resources:sync_s3
 ```
