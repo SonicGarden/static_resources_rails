@@ -17,7 +17,7 @@ namespace :static_resources do
     manifest_files = ["assets/#{StaticResourcesRails.sprockets_manifest_filename}", 'packs/manifest.json']
 
     manifest_files.each do |manifest_file|
-      download_url = "https://#{Rails.application.config.action_controller.asset_host}/#{manifest_file}"
+      download_url = "#{Rails.application.config.action_controller.asset_host}/#{manifest_file}"
       file_path = Rails.public_path.join(manifest_file)
       file_path.parent.mkdir unless file_path.parent.exist?
       IO.write(file_path, URI.open(download_url).read)
