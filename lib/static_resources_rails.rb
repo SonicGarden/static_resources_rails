@@ -11,7 +11,9 @@ module StaticResourcesRails
 
     def bucket=(value)
       @bucket = value
-      Rails.application.config.action_controller.asset_host = "#{@bucket}.s3.#{region}.amazonaws.com"
+      asset_host = "#{@bucket}.s3.#{region}.amazonaws.com"
+      Rails.application.config.action_controller.asset_host = asset_host
+      Rails.application.config.action_mailer.asset_host = asset_host
       Rails.application.config.assets.manifest = "public/assets/#{sprockets_manifest_filename}"
     end
 
