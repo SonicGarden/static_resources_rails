@@ -3,7 +3,7 @@ namespace :static_resources do
   task sync_s3: :environment do
     require 'static_resources_rails/storage'
 
-    %w[packs assets].each do |dir|
+    ['assets', **StaticResourcesRails.additional_sync_dirs].each do |dir|
       StaticResourcesRails::Storage.sync(dir)
     end
   end
@@ -14,7 +14,7 @@ namespace :static_resources do
       raise StaticResourcesRails::ManifestError, 'config.assets.manifest is blank!'
     end
 
-    manifest_files = ["assets/#{StaticResourcesRails.sprockets_manifest_filename}", 'packs/manifest.json']
+    manifest_files = ["assets/#{StaticResourcesRails.sprockets_manifest_filename}", **StaticResourcesRails.additional_manifest_files]
 
     manifest_files.each do |manifest_file|
       download_url = "https://#{Rails.application.config.action_controller.asset_host}/#{manifest_file}"

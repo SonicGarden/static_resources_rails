@@ -7,7 +7,7 @@ module StaticResourcesRails
   class SyncError < Error; end
 
   class << self
-    attr_accessor :region, :sprockets_manifest_filename
+    attr_accessor :region, :sprockets_manifest_filename, :additional_sync_dirs, :additional_manifest_files
 
     def bucket=(value)
       @bucket = value
@@ -26,4 +26,6 @@ module StaticResourcesRails
 
   self.region = 'ap-northeast-1'
   self.sprockets_manifest_filename = '.sprockets-manifest.json'
+  self.additional_sync_dirs = %w[packs]
+  self.additional_manifest_files = %w[packs/manifest.json]
 end
