@@ -35,31 +35,6 @@ bin/rake static_resources:sync_s3
 bin/rake static_resources:download_manifest
 ```
 
-### With vite_rails
-
-`vite.config.ts`
-```javascript
-import gzipPlugin from 'rollup-plugin-gzip'
-import { defineConfig } from 'vite'
-import RubyPlugin from 'vite-plugin-ruby'
-
-const isDistEnv = process.env.RAILS_ENV === 'production' || process.env.RAILS_ENV === 'staging'
-
-export default defineConfig({
-  plugins: [
-    RubyPlugin(),
-    isDistEnv && gzipPlugin(),
-  ],
-})
-
-```
-
-`config/initializers/static_resources_rails.rb`
-```ruby
-StaticResourcesRails.additional_sync_dirs = %w[vite]
-StaticResourcesRails.additional_manifest_files = %w[vite/manifest.json vite/manifest-assets.json]
-```
-
 ## Tasks
 
 ### `static_resources:sync_s3`
