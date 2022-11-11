@@ -15,10 +15,7 @@ module StaticResourcesRails
     end
 
     def sync
-      dir = Rails.public_path.join(@dir)
-      return unless dir.directory?
-
-      dir.find do |path|
+      Rails.public_path.join(@dir).find do |path|
         next if path.directory?
 
         upload_file(path)
