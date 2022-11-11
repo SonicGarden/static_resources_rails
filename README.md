@@ -60,6 +60,14 @@ StaticResourcesRails.additional_sync_dirs = %w[vite]
 StaticResourcesRails.additional_manifest_files = %w[vite/manifest.json vite/manifest-assets.json]
 ```
 
+### With webpacker
+
+`config/initializers/static_resources_rails.rb`
+```ruby
+StaticResourcesRails.additional_sync_dirs = %w[packs]
+StaticResourcesRails.additional_manifest_files = %w[packs/manifest.json]
+```
+
 ## Tasks
 
 ### `static_resources:sync_s3`
@@ -118,4 +126,20 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.STATIC_RESOURCES_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.STATIC_RESOURCES_AWS_SECRET_KEY_ID }}
         run: bundle exec rake static_resources:sync_s3
+```
+
+## With OpsWorks
+
+Skip `assets:precompile` on deploying. Add below lines to Layer's Custom JSON:
+
+```
+{
+    "deploy": {
+        "YOUR_APP_NAME": {
+            "framework": {
+                "assets_precompile": false
+            }
+        }
+    }
+}
 ```

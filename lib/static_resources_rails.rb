@@ -26,6 +26,6 @@ module StaticResourcesRails
 
   self.region = 'ap-northeast-1'
   self.sprockets_manifest_filename = '.sprockets-manifest.json'
-  self.additional_sync_dirs = %w[packs]
-  self.additional_manifest_files = %w[packs/manifest.json]
+  self.additional_sync_dirs = []
+  self.additional_manifest_files = []
 end
