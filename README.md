@@ -60,6 +60,14 @@ StaticResourcesRails.additional_sync_dirs = %w[vite]
 StaticResourcesRails.additional_manifest_files = %w[vite/manifest.json vite/manifest-assets.json]
 ```
 
+### With webpacker
+
+`config/initializers/static_resources_rails.rb`
+```ruby
+StaticResourcesRails.additional_sync_dirs = %w[packs]
+StaticResourcesRails.additional_manifest_files = %w[packs/manifest.json]
+```
+
 ## Tasks
 
 ### `static_resources:sync_s3`
