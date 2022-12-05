@@ -19,7 +19,13 @@ And then execute:
 In `config/environments/production.rb`
 
 ```ruby
-StaticResourcesRails.bucket = 'static-resources-production'
+StaticResourcesRails.set_bucket('static-resources-production')
+```
+
+If you want to skip using the S3 bucket host as `asset_host`:
+
+```ruby
+StaticResourcesRails.set_bucket('static-resources-production', with_asset_host: false)
 ```
 
 ### Before deploying
