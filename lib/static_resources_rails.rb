@@ -17,9 +17,8 @@ module StaticResourcesRails
     def set_bucket(value, with_asset_host: true)
       @bucket = value
       if with_asset_host
-        asset_host = "#{@bucket}.s3.#{region}.amazonaws.com"
-        Rails.application.config.action_controller.asset_host = asset_host
-        Rails.application.config.action_mailer.asset_host = asset_host
+        Rails.application.config.action_controller.asset_host = bucket_host
+        Rails.application.config.action_mailer.asset_host = bucket_host
       end
       Rails.application.config.assets.manifest = "public/assets/#{sprockets_manifest_filename}"
     end
@@ -28,6 +27,10 @@ module StaticResourcesRails
       raise Error, 'bucket is empty!' unless @bucket
 
       @bucket
+    end
+
+    def bucket_host
+      "#{bucket}.s3.#{region}.amazonaws.com"
     end
   end
 
