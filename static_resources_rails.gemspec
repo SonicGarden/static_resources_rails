@@ -29,4 +29,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rails", ">= 6.0.0"
   spec.add_dependency "aws-sdk-s3"
   spec.add_dependency "mime-types"
+  spec.add_dependency "concurrent-ruby"
 end
