@@ -22,7 +22,7 @@ module StaticResourcesRails
     private
 
     def all_files
-      Rails.public_path.join(@dir).find.select { |path| !path.directory? }
+      Rails.public_path.join(@dir).find.reject(&:directory?)
     end
 
     def upload_files(files)
