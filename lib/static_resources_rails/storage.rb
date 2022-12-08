@@ -26,7 +26,7 @@ module StaticResourcesRails
     end
 
     def upload_files(files)
-      ordered_by_size_files = files.sort { |a, b| b.size - a.size }
+      ordered_by_size_files = files.sort_by(&:size).reverse
       uploader = Uploader.new(bucket)
       ordered_by_size_files.each do |path|
         uploader.upload(path)
