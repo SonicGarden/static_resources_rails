@@ -62,7 +62,7 @@ module StaticResourcesRails
 
       def upload_file(path)
         max_age = 86400 * 365
-        gzipped = "#{path.to_s}.gz"
+        gzipped = "#{path}.gz"
         options = {
           cache_control: "max-age=#{max_age}",
           content_type: ::MIME::Types.type_for(path.extname).first.to_s,
