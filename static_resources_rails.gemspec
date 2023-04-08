@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.description   = %q{Delivering static resources from s3.}
   spec.homepage      = "https://github.com/SonicGarden/static_resources_rails"
   spec.license       = "MIT"
-  spec.required_ruby_version = Gem::Requirement.new(">= 2.6.0")
+  spec.required_ruby_version = Gem::Requirement.new(">= 3.0.0")
 
   spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
 
@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "rails", ">= 6.0.0"
+  spec.add_dependency "rails", ">= 6.1.0"
   spec.add_dependency "aws-sdk-s3"
   spec.add_dependency "mime-types"
   spec.add_dependency "concurrent-ruby"

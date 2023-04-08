@@ -9,16 +9,12 @@ module StaticResourcesRails
   class << self
     attr_accessor :region, :sprockets_manifest_filename, :additional_sync_dirs, :additional_manifest_files
 
-    def bucket=(value)
-      ActiveSupport::Deprecation.warn('Use StaticResourcesRails.set_bucket')
-      set_bucket(value)
-    end
-
     def set_bucket(value, with_asset_host: true)
       @bucket = value
       if with_asset_host
-        Rails.application.config.action_controller.asset_host = bucket_host
-        Rails.application.config.action_mailer.asset_host = bucket_host
+        asset_host = ->(source) { %r|\A/#{Regexp.union(aseet_dirs)}/|.match?(source) ? bucket_host : nil }
+        Rails.application.config.action_controller.asset_host = asset_host
+        Rails.application.config.action_mailer.asset_host = asset_host
       end
       Rails.application.config.assets.manifest = "public/assets/#{sprockets_manifest_filename}"
     end
@@ -32,9 +28,14 @@ module StaticResourcesRails
     def bucket_host
       "#{bucket}.s3.#{region}.amazonaws.com"
     end
+
+    def aseet_dirs
+      ['assets', *additional_sync_dirs]
+    end
   end
 
   self.region = 'ap-northeast-1'
+  # TODO: rename
   self.sprockets_manifest_filename = '.sprockets-manifest.json'
   self.additional_sync_dirs = []
   self.additional_manifest_files = []
