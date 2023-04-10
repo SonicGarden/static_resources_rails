@@ -3,7 +3,7 @@ namespace :static_resources do
   task sync_s3: :environment do
     require 'static_resources_rails/storage'
 
-    ['assets', *StaticResourcesRails.additional_sync_dirs].each do |dir|
+    StaticResourcesRails.aseet_dirs.each do |dir|
       StaticResourcesRails::Storage.sync(dir)
     end
   end
